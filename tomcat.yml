@@ -1,0 +1,33 @@
+---
+- hosts: webservers
+  name: tomcat
+  tasks:
+  - name: java
+    yum:
+     name: "{{java}}"
+     state: installed
+    vars:
+     java: java-1.8.0-openjdk-devel.x86_64
+  - name: to install tomcat
+    get_url:
+     url: http://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.38/bin/apache-tomcat-8.5.38.tar.gz
+     dest: /opt
+     mode: 0644
+  - name: to copy jenkins file to webapps folder
+    copy:
+     src: /opt/jenkins.war
+     dest: /opt/apache-tomcat-8.5.38/webapps/
+     mode: 0744
+  - name: to change permissions
+    file: 
+     path: /opt/apache-tomcat-8.5.38/bin/startup.sh 
+     mode: 764
+     state: file
+  - name: to change permissions
+    file:
+     path: /opt/apache-tomcat-8.5.38/bin/catalina.sh
+     mode: 764
+     state: file
+  - name: to start tomcat
+    command: nohup /opt/apache-tomcat-8.5.38/bin/startup.sh
+    

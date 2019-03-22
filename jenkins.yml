@@ -1,0 +1,12 @@
+---
+- hosts: webservers
+  name: to install jenkins
+  vars:
+   items: ['/opt/jenkins.war','/opt/apache-tomcat-8.5.38']
+  tasks:
+  - name: to copy jenkins war file to node
+    copy:
+     src: "{{items}}"
+     dest: /opt
+  with_items:
+    - "{{items}}"

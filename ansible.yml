@@ -1,0 +1,8 @@
+---
+- hosts: webservers
+  name: first playbook  
+  tasks:
+  - name: to install wget
+    yum:
+      name: httpd
+      state: present
